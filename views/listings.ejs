@@ -1,0 +1,121 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1>
+            Explore Stays 🏡
+        </h1>
+
+        <a
+            href="/listings/new"
+            class="btn btn-success"
+        >
+            + Add New Listing
+        </a>
+
+    </div>
+
+
+    <form
+        action="/listings"
+        method="GET"
+        class="mb-5"
+    >
+
+        <div class="input-group">
+
+            <input
+    type="text"
+    name="location"
+    class="form-control"
+    placeholder="🔍 Search by location..."
+    value="<%= typeof location !== 'undefined' ? location : '' %>"
+>
+
+            <button
+                type="submit"
+                class="btn btn-dark"
+            >
+                Search
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <% if (listings.length === 0) { %>
+
+        <div class="text-center py-5">
+
+            <h3>
+                🔍 No stays found
+            </h3>
+
+            <p class="text-muted">
+                We couldn't find any stays for your search.
+            </p>
+
+            <a
+                href="/listings"
+                class="btn btn-dark"
+            >
+                View All Listings
+            </a>
+
+        </div>
+
+    <% } else { %>
+
+
+        <div class="row">
+
+            <% listings.forEach((listing) => { %>
+
+                <div class="col-md-4 mb-4">
+
+                    <div class="card listing-card h-100 shadow-sm">
+
+                        <img
+                            src="<%= listing.image.url %>"
+                            class="card-img-top"
+                            alt="<%= listing.title %>"
+                        >
+
+                        <div class="card-body">
+
+                            <h4 class="card-title">
+                                <%= listing.title %>
+                            </h4>
+
+                            <p class="card-text">
+                                📍 <%= listing.location %>
+                            </p>
+
+                            <p class="listing-price">
+                                ₹ <%= listing.price %> / night
+                            </p>
+
+                            <a
+                                href="/listings/<%= listing.id %>"
+                                class="btn btn-dark"
+                            >
+                                View Details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+
+    <% } %>
+
+</div>
